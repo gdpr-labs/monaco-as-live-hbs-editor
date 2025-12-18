@@ -1,0 +1,447 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GDPR Article 30 - Processing Activity Declaration</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        background: #f5f5f5;
+      }
+      .container {
+        background: white;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      header {
+        border-bottom: 3px solid #2196f3;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+      h1 {
+        color: #1976d2;
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+      .subtitle {
+        color: #666;
+        font-size: 14px;
+        font-style: italic;
+      }
+      .metadata {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 30px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 10px;
+      }
+      .metadata-item {
+        font-size: 13px;
+      }
+      .metadata-label {
+        font-weight: 600;
+        color: #555;
+      }
+      .section {
+        margin-bottom: 30px;
+      }
+      .section-title {
+        color: #1976d2;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #e3f2fd;
+      }
+      .field {
+        margin-bottom: 20px;
+      }
+      .field-label {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 5px;
+        font-size: 14px;
+      }
+      .field-value {
+        color: #333;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 4px;
+        border-left: 3px solid #2196f3;
+      }
+      .field-value.text-long {
+        white-space: pre-wrap;
+        line-height: 1.8;
+      }
+      .list {
+        list-style: none;
+        padding: 0;
+      }
+      .list li {
+        padding: 8px 12px;
+        margin-bottom: 5px;
+        background: #e3f2fd;
+        border-radius: 4px;
+      }
+      .list li:before {
+        content: "▸ ";
+        color: #2196f3;
+        font-weight: bold;
+        margin-right: 8px;
+      }
+      .partners-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+      }
+      .partner-card {
+        padding: 12px;
+        background: #e3f2fd;
+        border-radius: 5px;
+        border-left: 4px solid #2196f3;
+      }
+      .partner-name {
+        font-weight: 600;
+        color: #1976d2;
+        margin-bottom: 5px;
+      }
+      .partner-role {
+        font-size: 12px;
+        color: #666;
+        font-style: italic;
+      }
+      .badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 600;
+        margin-right: 8px;
+        margin-bottom: 8px;
+      }
+      .badge-active {
+        background: #4caf50;
+        color: white;
+      }
+      .badge-inactive {
+        background: #9e9e9e;
+        color: white;
+      }
+      .badge-security {
+        background: #ff9800;
+        color: white;
+      }
+      .empty-value {
+        color: #999;
+        font-style: italic;
+      }
+      footer {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 2px solid #e0e0e0;
+        text-align: center;
+        color: #666;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>{{i18n.pageTitle}}</h1>
+        <div class="subtitle">{{i18n.pageSubtitle}}</div>
+      </header>
+
+      <div class="metadata">
+        <div class="metadata-item">
+          <span class="metadata-label">{{i18n.metadataOrganization}}:</span>
+          {{organization.name}}
+        </div>
+        <div class="metadata-item">
+          <span class="metadata-label">{{i18n.metadataOu}}:</span>
+          {{ou.name}}
+        </div>
+        <div class="metadata-item">
+          <span class="metadata-label">{{i18n.metadataStatus}}:</span>
+          {{#if isActive}}
+            <span class="badge badge-active">{{i18n.statusActive}}</span>
+          {{else}}
+            <span class="badge badge-inactive">{{i18n.statusInactive}}</span>
+          {{/if}}
+        </div>
+        <div class="metadata-item">
+          <span class="metadata-label">{{i18n.metadataLastUpdated}}:</span>
+          {{lastUpdated}}
+        </div>
+      </div>
+
+      <!-- Activity Identification -->
+      <section class="section">
+        <h2 class="section-title">{{i18n.section1Title}}</h2>
+
+        <div class="field">
+          <div class="field-label">{{i18n.labelActivityName}}</div>
+          <div class="field-value">{{activityName}}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">{{i18n.labelPurposeShort}}</div>
+          <div class="field-value">{{purposeShort}}</div>
+        </div>
+
+        {{#if purposeLong}}
+          <div class="field">
+            <div class="field-label">{{i18n.labelPurposeLong}}</div>
+            <div class="field-value text-long">{{purposeLong}}</div>
+          </div>
+        {{/if}}
+      </section>
+
+      <!-- Controllers and Processors -->
+      <section class="section">
+        <h2 class="section-title">{{i18n.section2Title}}</h2>
+
+        {{#if controllers}}
+          <div class="field">
+            <div class="field-label">{{i18n.labelControllers}}</div>
+            <div class="partners-grid">
+              {{#each controllers}}
+                <div class="partner-card">
+                  <div class="partner-name">{{this.name}}</div>
+                  {{#if this.address}}
+                    <div class="partner-role">{{this.address}}</div>
+                  {{/if}}
+                </div>
+              {{/each}}
+            </div>
+          </div>
+        {{/if}}
+
+        {{#if processors}}
+          <div class="field">
+            <div class="field-label">{{i18n.labelProcessors}}</div>
+            <div class="partners-grid">
+              {{#each processors}}
+                <div class="partner-card">
+                  <div class="partner-name">{{this.name}}</div>
+                  {{#if this.address}}
+                    <div class="partner-role">{{this.address}}</div>
+                  {{/if}}
+                </div>
+              {{/each}}
+            </div>
+          </div>
+        {{/if}}
+      </section>
+
+      <!-- Legal Basis -->
+      <section class="section">
+        <h2 class="section-title">{{i18n.section3Title}}</h2>
+
+        {{#if legalbasis}}
+          <div class="field">
+            <div class="field-label">{{i18n.labelLegalBasis}}</div>
+            <div class="field-value">
+              {{#each legalbasis}}
+                <span
+                  class="badge"
+                  style="background: #673AB7; color: white;"
+                >{{this}}</span>
+              {{/each}}
+            </div>
+          </div>
+        {{/if}}
+
+        {{#if legalbasisLong}}
+          <div class="field">
+            <div class="field-label">{{i18n.labelLegalBasisLong}}</div>
+            <div class="field-value text-long">{{legalbasisLong}}</div>
+          </div>
+        {{/if}}
+
+        {{#if legalbasisSpecial}}
+          <div class="field">
+            <div class="field-label">{{i18n.labelLegalBasisSpecial}}</div>
+            <div class="field-value">
+              {{#each legalbasisSpecial}}
+                <span
+                  class="badge"
+                  style="background: #E91E63; color: white;"
+                >{{this}}</span>
+              {{/each}}
+            </div>
+          </div>
+        {{/if}}
+      </section>
+
+      <!-- Data Categories -->
+      <section class="section">
+        <h2 class="section-title">{{i18n.section4Title}}</h2>
+
+        {{#if dataCategories}}
+          <div class="field">
+            <div class="field-label">{{i18n.labelDataCategories}}</div>
+            <ul class="list">
+              {{#each dataCategories}}
+                <li>{{this}}</li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/if}}
+
+        {{#if datasubjectCategories}}
+          <div class="field">
+            <div class="field-label">{{i18n.labelDataSubjectCategories}}</div>
+            <ul class="list">
+              {{#each datasubjectCategories}}
+                <li>{{this}}</li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/if}}
+
+        {{#if dataOrigin}}
+          <div class="field">
+            <div class="field-label">{{i18n.labelDataOrigin}}</div>
+            <div class="field-value text-long">{{dataOrigin}}</div>
+          </div>
+        {{/if}}
+      </section>
+
+      <!-- Processing Activities -->
+      <section class="section">
+        <h2 class="section-title">{{i18n.section5Title}}</h2>
+
+        {{#if activityCategories}}
+          <div class="field">
+            <div class="field-label">{{i18n.labelActivityCategories}}</div>
+            <div class="field-value">
+              {{#each activityCategories}}
+                <span
+                  class="badge"
+                  style="background: #00BCD4; color: white;"
+                >{{this}}</span>
+              {{/each}}
+            </div>
+          </div>
+        {{/if}}
+
+        {{#if profiling}}
+          <div class="field">
+            <div class="field-label">{{i18n.labelProfiling}}</div>
+            <div class="field-value text-long">{{profiling}}</div>
+          </div>
+        {{/if}}
+      </section>
+
+      <!-- Retention -->
+      <section class="section">
+        <h2 class="section-title">{{i18n.section6Title}}</h2>
+
+        {{#if timeLimit}}
+          <div class="field">
+            <div class="field-label">{{i18n.labelRetentionPeriod}}</div>
+            <div class="field-value">{{timeLimit}}</div>
+          </div>
+        {{else}}
+          <div class="field">
+            <div class="field-label">{{i18n.labelRetentionPeriod}}</div>
+            <div class="field-value empty-value">{{i18n.emptyValue}}</div>
+          </div>
+        {{/if}}
+      </section>
+
+      <!-- Communications and Transfers -->
+      <section class="section">
+        <h2 class="section-title">{{i18n.section7Title}}</h2>
+
+        {{#if communications}}
+          <div class="field">
+            <div class="field-label">{{i18n.labelCommunications}}</div>
+            <ul class="list">
+              {{#each communications}}
+                <li>{{this}}</li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/if}}
+
+        {{#if communicationsLong}}
+          <div class="field">
+            <div class="field-label">{{i18n.labelCommunicationsLong}}</div>
+            <div class="field-value text-long">{{communicationsLong}}</div>
+          </div>
+        {{/if}}
+
+        {{#if transfers}}
+          <div class="field">
+            <div class="field-label">{{i18n.labelTransfers}}</div>
+            <ul class="list">
+              {{#each transfers}}
+                <li>{{this}}</li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/if}}
+
+        {{#if transfersLong}}
+          <div class="field">
+            <div class="field-label">{{i18n.labelTransfersLong}}</div>
+            <div class="field-value text-long">{{transfersLong}}</div>
+          </div>
+        {{/if}}
+      </section>
+
+      <!-- Security Measures -->
+      <section class="section">
+        <h2 class="section-title">{{i18n.section8Title}}</h2>
+
+        {{#if securityLevel}}
+          <div class="field">
+            <div class="field-label">{{i18n.labelSecurityLevel}}</div>
+            <div class="field-value">
+              <span class="badge badge-security">{{securityLevel}}</span>
+            </div>
+          </div>
+        {{/if}}
+
+        {{#if securityMeasuresLong}}
+          <div class="field">
+            <div class="field-label">{{i18n.labelSecurityMeasures}}</div>
+            <div class="field-value text-long">{{securityMeasuresLong}}</div>
+          </div>
+        {{/if}}
+      </section>
+
+      <!-- Contracts -->
+      {{#if contracts}}
+        <section class="section">
+          <h2 class="section-title">{{i18n.section9Title}}</h2>
+
+          <div class="field">
+            <div class="field-label">{{i18n.labelContracts}}</div>
+            <div class="field-value text-long">{{contracts}}</div>
+          </div>
+        </section>
+      {{/if}}
+
+      <footer>
+        <p>{{i18n.footerGenerated}}</p>
+        <p>{{i18n.footerCompliance}}</p>
+      </footer>
+    </div>
+  </body>
+</html>

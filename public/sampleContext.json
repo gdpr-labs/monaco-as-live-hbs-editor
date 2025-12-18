@@ -1,0 +1,115 @@
+{
+  "i18n": {
+    "pageTitle": "GDPR Article 30 – Processing Activity Declaration",
+    "pageSubtitle": "Comprehensive overview of an organization's processing activity",
+    "metadataOrganization": "Organization",
+    "metadataOu": "Business Unit",
+    "metadataStatus": "Record Status",
+    "metadataLastUpdated": "Last Updated",
+    "statusActive": "Active",
+    "statusInactive": "Inactive",
+    "section1Title": "1. Activity Identification",
+    "labelActivityName": "Activity Name",
+    "labelPurposeShort": "Purpose (Short)",
+    "labelPurposeLong": "Purpose (Detailed)",
+    "section2Title": "2. Controllers & Processors",
+    "labelControllers": "Controllers",
+    "labelProcessors": "Processors",
+    "section3Title": "3. Legal Basis",
+    "labelLegalBasis": "Applicable Legal Basis",
+    "labelLegalBasisLong": "Legal Basis (Extended)",
+    "labelLegalBasisSpecial": "Special Category Justifications",
+    "section4Title": "4. Data & Data Subjects",
+    "labelDataCategories": "Data Categories",
+    "labelDataSubjectCategories": "Data Subject Categories",
+    "labelDataOrigin": "Data Origin",
+    "section5Title": "5. Processing Activities",
+    "labelActivityCategories": "Processing Categories",
+    "labelProfiling": "Profiling Activities",
+    "section6Title": "6. Retention",
+    "labelRetentionPeriod": "Retention Period",
+    "emptyValue": "No information provided",
+    "section7Title": "7. Communications & Transfers",
+    "labelCommunications": "Communication Channels",
+    "labelCommunicationsLong": "Communication Details",
+    "labelTransfers": "International Transfers",
+    "labelTransfersLong": "Transfer Details",
+    "section8Title": "8. Security Measures",
+    "labelSecurityLevel": "Security Level",
+    "labelSecurityMeasures": "Security Measures",
+    "section9Title": "9. Contracts",
+    "labelContracts": "Contractual Framework",
+    "footerGenerated": "Generated via the privacy operations workspace",
+    "footerCompliance": "Ensure updates comply with GDPR Article 30 requirements"
+  },
+  "organization": {
+    "name": "Contoso Financial Services"
+  },
+  "ou": {
+    "name": "Privacy & Compliance Office"
+  },
+  "isActive": true,
+  "lastUpdated": "2025-12-18",
+  "activityName": "Customer Onboarding & KYC Platform",
+  "purposeShort": "Manage onboarding and due diligence for new customer accounts.",
+  "purposeLong": "Customer applications are collected through a digital portal, validated against third-party identity providers, and assessed for onboarding approval. The platform coordinates internal teams and external partners to complete KYC and AML checks.",
+  "controllers": [
+    {
+      "name": "Contoso Financial Services GmbH",
+      "address": "Fischerinsel 12, 10179 Berlin, Germany"
+    },
+    {
+      "name": "Contoso Holdings EU",
+      "address": "Avenida da Liberdade 245, 1250-143 Lisbon, Portugal"
+    }
+  ],
+  "processors": [
+    {
+      "name": "Northwind Identity Solutions",
+      "address": "221B Baker Street, London, UK"
+    },
+    {
+      "name": "Fabrikam Cloud Infrastructure",
+      "address": "Leidsestraat 14, 1017 PA Amsterdam, Netherlands"
+    }
+  ],
+  "legalbasis": [
+    "GDPR Article 6(1)(b) – Contractual necessity",
+    "GDPR Article 6(1)(c) – Legal obligation"
+  ],
+  "legalbasisLong": "Processing is necessary to onboard customers, satisfy regulatory obligations under AML/KYC legislation, and maintain accurate contractual records for account servicing.",
+  "legalbasisSpecial": [
+    "GDPR Article 9(2)(g) – Substantial public interest"
+  ],
+  "dataCategories": [
+    "Identification data (names, addresses, IDs)",
+    "Financial suitability data",
+    "KYC questionnaire responses"
+  ],
+  "datasubjectCategories": [
+    "Retail banking applicants",
+    "Guarantors",
+    "Beneficial owners"
+  ],
+  "dataOrigin": "Collected directly from applicants via secure portals and supplemented with sanctioned third-party KYC providers and public registers.",
+  "activityCategories": [
+    "Identity verification",
+    "Risk scoring",
+    "Account provisioning"
+  ],
+  "profiling": "Automated profiling assesses risk levels and triggers manual review for high-risk indicators. Human oversight validates any automated decisions before final approval.",
+  "timeLimit": "Seven years after account closure, unless legal holds require extension.",
+  "communications": [
+    "Secure messaging within customer portal",
+    "Encrypted email updates to compliance officers"
+  ],
+  "communicationsLong": "All communications with regulators and applicants are logged automatically. Sensitive disclosures are routed through the encrypted correspondence module.",
+  "transfers": [
+    "AWS EU-West (Ireland)",
+    "Azure Germany West Central"
+  ],
+  "transfersLong": "Data transfers to infrastructure providers remain within the EEA. Vendor subprocessors undergo annual transfer impact assessments and implement SCCs.",
+  "securityLevel": "High",
+  "securityMeasuresLong": "Platform enforces FIPS-compliant encryption, role-based access control, adaptive MFA, continuous vulnerability scanning, and quarterly penetration testing.",
+  "contracts": "Data processing agreements signed with all processors and subprocessors. Contract repository reference: DPA-KYC-2025-08."
+}
