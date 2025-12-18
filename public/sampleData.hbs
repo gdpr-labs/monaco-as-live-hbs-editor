@@ -163,50 +163,50 @@
   <body>
     <div class="container">
       <header>
-        <h1>{{i18n.pageTitle}}</h1>
-        <div class="subtitle">{{i18n.pageSubtitle}}</div>
+        <h1>GDPR Article 30 – Processing Activity Declaration</h1>
+        <div class="subtitle">Comprehensive overview of an organization's processing activity</div>
       </header>
 
       <div class="metadata">
         <div class="metadata-item">
-          <span class="metadata-label">{{i18n.metadataOrganization}}:</span>
+          <span class="metadata-label">Organization:</span>
           {{organization.name}}
         </div>
         <div class="metadata-item">
-          <span class="metadata-label">{{i18n.metadataOu}}:</span>
+          <span class="metadata-label">Business Unit:</span>
           {{ou.name}}
         </div>
         <div class="metadata-item">
-          <span class="metadata-label">{{i18n.metadataStatus}}:</span>
+          <span class="metadata-label">Record Status:</span>
           {{#if isActive}}
-            <span class="badge badge-active">{{i18n.statusActive}}</span>
+            <span class="badge badge-active">Active</span>
           {{else}}
-            <span class="badge badge-inactive">{{i18n.statusInactive}}</span>
+            <span class="badge badge-inactive">Inactive</span>
           {{/if}}
         </div>
         <div class="metadata-item">
-          <span class="metadata-label">{{i18n.metadataLastUpdated}}:</span>
+          <span class="metadata-label">Last Updated:</span>
           {{lastUpdated}}
         </div>
       </div>
 
       <!-- Activity Identification -->
       <section class="section">
-        <h2 class="section-title">{{i18n.section1Title}}</h2>
+        <h2 class="section-title">1. Activity Identification</h2>
 
         <div class="field">
-          <div class="field-label">{{i18n.labelActivityName}}</div>
+          <div class="field-label">Activity Name</div>
           <div class="field-value">{{activityName}}</div>
         </div>
 
         <div class="field">
-          <div class="field-label">{{i18n.labelPurposeShort}}</div>
+          <div class="field-label">Purpose (Short)</div>
           <div class="field-value">{{purposeShort}}</div>
         </div>
 
         {{#if purposeLong}}
           <div class="field">
-            <div class="field-label">{{i18n.labelPurposeLong}}</div>
+            <div class="field-label">Purpose (Detailed)</div>
             <div class="field-value text-long">{{purposeLong}}</div>
           </div>
         {{/if}}
@@ -214,11 +214,11 @@
 
       <!-- Controllers and Processors -->
       <section class="section">
-        <h2 class="section-title">{{i18n.section2Title}}</h2>
+        <h2 class="section-title">2. Controllers & Processors</h2>
 
         {{#if controllers}}
           <div class="field">
-            <div class="field-label">{{i18n.labelControllers}}</div>
+            <div class="field-label">Controllers</div>
             <div class="partners-grid">
               {{#each controllers}}
                 <div class="partner-card">
@@ -234,7 +234,7 @@
 
         {{#if processors}}
           <div class="field">
-            <div class="field-label">{{i18n.labelProcessors}}</div>
+            <div class="field-label">Processors</div>
             <div class="partners-grid">
               {{#each processors}}
                 <div class="partner-card">
@@ -251,11 +251,11 @@
 
       <!-- Legal Basis -->
       <section class="section">
-        <h2 class="section-title">{{i18n.section3Title}}</h2>
+        <h2 class="section-title">3. Legal Basis</h2>
 
         {{#if legalbasis}}
           <div class="field">
-            <div class="field-label">{{i18n.labelLegalBasis}}</div>
+            <div class="field-label">Applicable Legal Basis</div>
             <div class="field-value">
               {{#each legalbasis}}
                 <span
@@ -269,14 +269,14 @@
 
         {{#if legalbasisLong}}
           <div class="field">
-            <div class="field-label">{{i18n.labelLegalBasisLong}}</div>
+            <div class="field-label">Legal Basis (Extended)</div>
             <div class="field-value text-long">{{legalbasisLong}}</div>
           </div>
         {{/if}}
 
         {{#if legalbasisSpecial}}
           <div class="field">
-            <div class="field-label">{{i18n.labelLegalBasisSpecial}}</div>
+            <div class="field-label">Special Category Justifications</div>
             <div class="field-value">
               {{#each legalbasisSpecial}}
                 <span
@@ -291,11 +291,11 @@
 
       <!-- Data Categories -->
       <section class="section">
-        <h2 class="section-title">{{i18n.section4Title}}</h2>
+        <h2 class="section-title">4. Data & Data Subjects</h2>
 
         {{#if dataCategories}}
           <div class="field">
-            <div class="field-label">{{i18n.labelDataCategories}}</div>
+            <div class="field-label">Data Categories</div>
             <ul class="list">
               {{#each dataCategories}}
                 <li>{{this}}</li>
@@ -306,7 +306,7 @@
 
         {{#if datasubjectCategories}}
           <div class="field">
-            <div class="field-label">{{i18n.labelDataSubjectCategories}}</div>
+            <div class="field-label">Data Subject Categories</div>
             <ul class="list">
               {{#each datasubjectCategories}}
                 <li>{{this}}</li>
@@ -317,7 +317,7 @@
 
         {{#if dataOrigin}}
           <div class="field">
-            <div class="field-label">{{i18n.labelDataOrigin}}</div>
+            <div class="field-label">Data Origin</div>
             <div class="field-value text-long">{{dataOrigin}}</div>
           </div>
         {{/if}}
@@ -325,11 +325,11 @@
 
       <!-- Processing Activities -->
       <section class="section">
-        <h2 class="section-title">{{i18n.section5Title}}</h2>
+        <h2 class="section-title">5. Processing Activities</h2>
 
         {{#if activityCategories}}
           <div class="field">
-            <div class="field-label">{{i18n.labelActivityCategories}}</div>
+            <div class="field-label">Processing Categories</div>
             <div class="field-value">
               {{#each activityCategories}}
                 <span
@@ -343,7 +343,7 @@
 
         {{#if profiling}}
           <div class="field">
-            <div class="field-label">{{i18n.labelProfiling}}</div>
+            <div class="field-label">Profiling Activities</div>
             <div class="field-value text-long">{{profiling}}</div>
           </div>
         {{/if}}
@@ -351,28 +351,28 @@
 
       <!-- Retention -->
       <section class="section">
-        <h2 class="section-title">{{i18n.section6Title}}</h2>
+        <h2 class="section-title">6. Retention</h2>
 
         {{#if timeLimit}}
           <div class="field">
-            <div class="field-label">{{i18n.labelRetentionPeriod}}</div>
+            <div class="field-label">Retention Period</div>
             <div class="field-value">{{timeLimit}}</div>
           </div>
         {{else}}
           <div class="field">
-            <div class="field-label">{{i18n.labelRetentionPeriod}}</div>
-            <div class="field-value empty-value">{{i18n.emptyValue}}</div>
+            <div class="field-label">Retention Period</div>
+            <div class="field-value empty-value">No information provided</div>
           </div>
         {{/if}}
       </section>
 
       <!-- Communications and Transfers -->
       <section class="section">
-        <h2 class="section-title">{{i18n.section7Title}}</h2>
+        <h2 class="section-title">7. Communications & Transfers</h2>
 
         {{#if communications}}
           <div class="field">
-            <div class="field-label">{{i18n.labelCommunications}}</div>
+            <div class="field-label">Communication Channels</div>
             <ul class="list">
               {{#each communications}}
                 <li>{{this}}</li>
@@ -383,14 +383,14 @@
 
         {{#if communicationsLong}}
           <div class="field">
-            <div class="field-label">{{i18n.labelCommunicationsLong}}</div>
+            <div class="field-label">Communication Details</div>
             <div class="field-value text-long">{{communicationsLong}}</div>
           </div>
         {{/if}}
 
         {{#if transfers}}
           <div class="field">
-            <div class="field-label">{{i18n.labelTransfers}}</div>
+            <div class="field-label">International Transfers</div>
             <ul class="list">
               {{#each transfers}}
                 <li>{{this}}</li>
@@ -401,7 +401,7 @@
 
         {{#if transfersLong}}
           <div class="field">
-            <div class="field-label">{{i18n.labelTransfersLong}}</div>
+            <div class="field-label">Transfer Details</div>
             <div class="field-value text-long">{{transfersLong}}</div>
           </div>
         {{/if}}
@@ -409,11 +409,11 @@
 
       <!-- Security Measures -->
       <section class="section">
-        <h2 class="section-title">{{i18n.section8Title}}</h2>
+        <h2 class="section-title">8. Security Measures</h2>
 
         {{#if securityLevel}}
           <div class="field">
-            <div class="field-label">{{i18n.labelSecurityLevel}}</div>
+            <div class="field-label">Security Level</div>
             <div class="field-value">
               <span class="badge badge-security">{{securityLevel}}</span>
             </div>
@@ -422,7 +422,7 @@
 
         {{#if securityMeasuresLong}}
           <div class="field">
-            <div class="field-label">{{i18n.labelSecurityMeasures}}</div>
+            <div class="field-label">Security Measures</div>
             <div class="field-value text-long">{{securityMeasuresLong}}</div>
           </div>
         {{/if}}
@@ -431,18 +431,18 @@
       <!-- Contracts -->
       {{#if contracts}}
         <section class="section">
-          <h2 class="section-title">{{i18n.section9Title}}</h2>
+          <h2 class="section-title">9. Contracts</h2>
 
           <div class="field">
-            <div class="field-label">{{i18n.labelContracts}}</div>
+            <div class="field-label">Contractual Framework</div>
             <div class="field-value text-long">{{contracts}}</div>
           </div>
         </section>
       {{/if}}
 
       <footer>
-        <p>{{i18n.footerGenerated}}</p>
-        <p>{{i18n.footerCompliance}}</p>
+        <p>Generated via the privacy operations workspace</p>
+        <p>Ensure updates comply with GDPR Article 30 requirements</p>
       </footer>
     </div>
   </body>

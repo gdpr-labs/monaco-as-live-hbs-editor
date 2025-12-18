@@ -238,6 +238,7 @@ const HomePage = () => {
           <Paper
             component="details"
             variant="outlined"
+            open
             sx={{
               p: 2,
               bgcolor: "background.default",
