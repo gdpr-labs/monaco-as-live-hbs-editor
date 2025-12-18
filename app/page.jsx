@@ -13,8 +13,8 @@ import {
   Button,
   Paper,
   Chip,
-  Alert
-} from '@mui/material';
+  Alert,
+} from "@mui/material";
 
 const HomePage = () => {
   const [template, setTemplate] = useState(DEFAULT_TEMPLATE);
@@ -141,25 +141,32 @@ const HomePage = () => {
       component="main"
       maxWidth="lg"
       sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
         gap: 4,
-        py: 6
+        py: 6,
       }}
     >
-      <Box component="header" sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+      <Box
+        component="header"
+        sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}
+      >
         <Typography variant="overline" color="info.main">
           Playground
         </Typography>
         <Typography
           variant="h3"
           component="h1"
-          sx={{ fontSize: { xs: '1.875rem', sm: '2.25rem' } }}
+          sx={{ fontSize: { xs: "1.875rem", sm: "2.25rem" } }}
         >
           Next.js + Monaco Editor
         </Typography>
-        <Typography variant="body1" sx={{ maxWidth: '42rem' }} color="text.secondary">
+        <Typography
+          variant="body1"
+          sx={{ maxWidth: "42rem" }}
+          color="text.secondary"
+        >
           Use the embedded Monaco editor below to experiment with Handlebars
           templates inside a modern Next.js App Router project.
         </Typography>
@@ -167,32 +174,38 @@ const HomePage = () => {
       <Box
         component="section"
         sx={{
-          display: 'grid',
+          display: "grid",
           flex: 1,
           gap: 3,
-          gridTemplateColumns: { xs: '1fr', lg: 'repeat(2, minmax(0, 1fr))' }
+          gridTemplateColumns: { xs: "1fr", lg: "repeat(2, minmax(0, 1fr))" },
         }}
       >
         <Paper
           elevation={2}
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
+            display: "flex",
+            flexDirection: "column",
             gap: 2,
-            p: 2.5
+            p: 2.5,
           }}
         >
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
             <Typography variant="h6" component="h2">
               Handlebars Template
             </Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Button
                 variant="outlined"
                 size="small"
                 onClick={refreshTemplate}
                 disabled={isTemplateLoading}
-                sx={{ fontSize: '0.75rem', px: 1.5 }}
+                sx={{ fontSize: "0.75rem", px: 1.5 }}
               >
                 {isTemplateLoading ? "Refreshing…" : "Refresh template"}
               </Button>
@@ -201,12 +214,12 @@ const HomePage = () => {
                 size="small"
                 variant="outlined"
                 color="info"
-                sx={{ fontSize: '0.75rem', textTransform: 'uppercase' }}
+                sx={{ fontSize: "0.75rem", textTransform: "uppercase" }}
               />
             </Box>
           </Box>
           {templateError ? (
-            <Alert severity="warning" sx={{ fontSize: '0.75rem' }}>
+            <Alert severity="warning" sx={{ fontSize: "0.75rem" }}>
               {templateError}
             </Alert>
           ) : null}
@@ -215,7 +228,11 @@ const HomePage = () => {
             value={template}
             onChange={handleTemplateChange}
           />
-          <Typography variant="caption" sx={{ textAlign: 'right' }} color="text.disabled">
+          <Typography
+            variant="caption"
+            sx={{ textAlign: "right" }}
+            color="text.disabled"
+          >
             {templateStatus}
           </Typography>
           <Paper
@@ -223,24 +240,33 @@ const HomePage = () => {
             variant="outlined"
             sx={{
               p: 2,
-              bgcolor: 'background.default',
-              '& summary': {
-                cursor: 'pointer',
-                userSelect: 'none',
-                '&:hover': {
-                  color: 'primary.main'
-                }
-              }
+              bgcolor: "background.default",
+              "& summary": {
+                cursor: "pointer",
+                userSelect: "none",
+                "&:hover": {
+                  color: "primary.main",
+                },
+              },
             }}
           >
             <summary>
               Sample context{" "}
-              <Typography component="span" variant="caption" sx={{ ml: 1 }} color="text.disabled">
+              <Typography
+                component="span"
+                variant="caption"
+                sx={{ ml: 1 }}
+                color="text.disabled"
+              >
                 ({contextStatus})
               </Typography>
             </summary>
             {contextError ? (
-              <Typography variant="caption" sx={{ mt: 1, display: 'block' }} color="warning.main">
+              <Typography
+                variant="caption"
+                sx={{ mt: 1, display: "block" }}
+                color="warning.main"
+              >
                 {contextError}
               </Typography>
             ) : null}
@@ -248,14 +274,14 @@ const HomePage = () => {
               component="pre"
               sx={{
                 mt: 1.5,
-                maxHeight: '32rem',
-                overflow: 'auto',
-                whiteSpace: 'pre-wrap',
+                maxHeight: "32rem",
+                overflow: "auto",
+                whiteSpace: "pre-wrap",
                 borderRadius: 1,
-                bgcolor: 'background.paper',
+                bgcolor: "background.paper",
                 p: 1.5,
-                fontSize: '0.75rem',
-                color: 'text.secondary'
+                fontSize: "0.75rem",
+                color: "text.secondary",
               }}
             >
               {formattedContext || "No data loaded."}
@@ -265,24 +291,30 @@ const HomePage = () => {
         <Paper
           elevation={2}
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
+            display: "flex",
+            flexDirection: "column",
             gap: 2,
-            p: 2.5
+            p: 2.5,
           }}
         >
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
             <Typography variant="h6" component="h2">
               Rendered Preview
             </Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Button
                 variant="outlined"
                 size="small"
                 color="success"
                 onClick={refreshContext}
                 disabled={isContextLoading}
-                sx={{ fontSize: '0.75rem', px: 1.5 }}
+                sx={{ fontSize: "0.75rem", px: 1.5 }}
               >
                 {isContextLoading ? "Refreshing…" : "Refresh context"}
               </Button>
@@ -291,47 +323,48 @@ const HomePage = () => {
                 size="small"
                 variant="outlined"
                 color="success"
-                sx={{ fontSize: '0.75rem', textTransform: 'uppercase' }}
+                sx={{ fontSize: "0.75rem", textTransform: "uppercase" }}
               />
             </Box>
           </Box>
-          <Paper
+          {/* <Paper
             variant="outlined"
             sx={{
               flex: 1,
               width: '100%',
               overflow: 'auto',
               p: 3,
-              bgcolor: '#ffffff'
+              bgcolor: 'background.paper'
             }}
-          >
-            {isContextLoading ? (
-              <Typography variant="body2" sx={{ color: '#64748b' }}>
-                Loading sample data…
-              </Typography>
-            ) : contextError ? (
-              <Alert severity="warning" sx={{ fontSize: '0.875rem' }}>
-                {contextError}
-              </Alert>
-            ) : !context ? (
-              <Typography variant="body2" sx={{ color: '#64748b' }}>
-                No sample data available. Add content to public/sampleData.hbs
-                to see the preview.
-              </Typography>
-            ) : compiled?.error ? (
-              <Alert severity="error" sx={{ fontSize: '0.875rem' }}>
-                <Box component="pre" sx={{ whiteSpace: 'pre-wrap', m: 0, fontFamily: 'monospace' }}>
-                  {compiled.error}
-                </Box>
-              </Alert>
-            ) : (
+          > */}
+          {isContextLoading ? (
+            <Typography variant="body2" color="text.secondary">
+              Loading sample data…
+            </Typography>
+          ) : contextError ? (
+            <Alert severity="warning" sx={{ fontSize: "0.875rem" }}>
+              {contextError}
+            </Alert>
+          ) : !context ? (
+            <Typography variant="body2" color="text.secondary">
+              No sample data available. Add content to public/sampleData.hbs to
+              see the preview.
+            </Typography>
+          ) : compiled?.error ? (
+            <Alert severity="error" sx={{ fontSize: "0.875rem" }}>
               <Box
-                className="preview-output"
-                sx={{ color: '#1e293b' }}
-                dangerouslySetInnerHTML={{ __html: compiled?.html ?? "" }}
-              />
-            )}
-          </Paper>
+                component="pre"
+                sx={{ whiteSpace: "pre-wrap", m: 0, fontFamily: "monospace" }}
+              >
+                {compiled.error}
+              </Box>
+            </Alert>
+          ) : (
+            <Box
+              className="preview-output"
+              dangerouslySetInnerHTML={{ __html: compiled?.html ?? "" }}
+            />
+          )}
         </Paper>
       </Box>
     </Container>
