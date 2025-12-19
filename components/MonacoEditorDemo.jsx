@@ -25,7 +25,8 @@ export const MonacoEditorDemo = ({
   height = "60vh",
   language = "handlebars",
   value = DEFAULT_TEMPLATE,
-  onChange
+  onChange,
+  onEditorMount
 }) => (
   <Editor
     height={height}
@@ -34,6 +35,7 @@ export const MonacoEditorDemo = ({
     path="template.hbs"
     value={value}
     onChange={(nextValue) => onChange?.(nextValue ?? "")}
+    onMount={(editor, monaco) => onEditorMount?.(editor, monaco)}
     theme="vs-dark"
     options={{
       minimap: { enabled: false },

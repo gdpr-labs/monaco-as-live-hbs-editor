@@ -1,20 +1,96 @@
 "use client";
 
-import Handlebars from "handlebars/dist/handlebars";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  DEFAULT_TEMPLATE,
-  MonacoEditorDemo,
-} from "@/components/MonacoEditorDemo";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import {
   Box,
   Container,
   Typography,
   Button,
   Paper,
-  Chip,
   Alert,
 } from "@mui/material";
+import Handlebars from "handlebars/dist/handlebars";
+
+import {
+  DEFAULT_TEMPLATE,
+  MonacoEditorDemo,
+} from "@/components/MonacoEditorDemo";
+import { COMMON_SNIPPETS } from "@/components/snippets";
+import { HandlebarsSnippetMenu } from "@/components/HandlebarsSnippetMenu";
+
+const buildContextSnippets = (data) => {
+  if (!data || typeof data !== "object") {
+    return [];
+  }
+
+  const snippets = [];
+  const seen = new Set();
+
+  const visit = (node, path) => {
+    if (node === null || node === undefined) {
+      return;
+    }
+
+    if (Array.isArray(node)) {
+      if (!path.length) {
+        return;
+      }
+
+      const joinedPath = path.join(".");
+      const firstObject = node.find(
+        (item) => item && typeof item === "object" && !Array.isArray(item)
+      );
+      const sampleKeys = firstObject
+        ? Object.keys(firstObject).slice(0, 2)
+        : [];
+      const loopBody = sampleKeys.length
+        ? sampleKeys.map((key) => `  {{${key}}}`).join("\n")
+        : "  {{this}}";
+
+      const loopOption = {
+        id: `each:${joinedPath}`,
+        label: `{{#each ${joinedPath}}}`,
+        snippet: `{{#each ${joinedPath}}}\n${loopBody}\n{{/each}}`,
+        detail: "Loop over context array",
+      };
+
+      if (!seen.has(loopOption.id)) {
+        snippets.push(loopOption);
+        seen.add(loopOption.id);
+      }
+
+      return;
+    }
+
+    if (typeof node === "object") {
+      Object.entries(node).forEach(([key, value]) => {
+        visit(value, [...path, key]);
+      });
+      return;
+    }
+
+    if (!path.length) {
+      return;
+    }
+
+    const joinedPath = path.join(".");
+    const valueOption = {
+      id: `value:${joinedPath}`,
+      label: `{{${joinedPath}}}`,
+      snippet: `{{${joinedPath}}}`,
+      detail: "Context value",
+    };
+
+    if (!seen.has(valueOption.id)) {
+      snippets.push(valueOption);
+      seen.add(valueOption.id);
+    }
+  };
+
+  visit(data, []);
+  return snippets.sort((a, b) => a.label.localeCompare(b.label));
+};
 
 const HomePage = () => {
   const [template, setTemplate] = useState(DEFAULT_TEMPLATE);
@@ -23,6 +99,8 @@ const HomePage = () => {
   const [context, setContext] = useState(null);
   const [contextError, setContextError] = useState(null);
   const [isContextLoading, setIsContextLoading] = useState(false);
+  const editorRef = useRef(null);
+  const monacoRef = useRef(null);
 
   const refreshTemplate = useCallback(async () => {
     setIsTemplateLoading(true);
@@ -80,6 +158,21 @@ const HomePage = () => {
     refreshContext();
   }, [refreshContext, refreshTemplate]);
 
+  const mustacheOptions = useMemo(() => {
+    const contextual = context ? buildContextSnippets(context) : [];
+    const merged = [...COMMON_SNIPPETS, ...contextual];
+    const seen = new Set();
+
+    return merged.filter((option) => {
+      if (seen.has(option.id)) {
+        return false;
+      }
+
+      seen.add(option.id);
+      return true;
+    });
+  }, [context]);
+
   const compiled = useMemo(() => {
     if (!context) {
       return null;
@@ -102,6 +195,63 @@ const HomePage = () => {
   const handleTemplateChange = useCallback((nextValue) => {
     setTemplate(nextValue);
   }, []);
+
+  const handleEditorMount = useCallback((editor, monaco) => {
+    editorRef.current = editor;
+    monacoRef.current = monaco;
+  }, []);
+
+  const handleSnippetInsert = useCallback((snippet) => {
+    const editor = editorRef.current;
+    const monaco = monacoRef.current;
+
+    if (!editor || !monaco || !snippet) {
+      return;
+    }
+
+    const selection = editor.getSelection();
+
+    if (!selection || !editor.getModel()) {
+      return;
+    }
+
+    const { startLineNumber, startColumn, endLineNumber, endColumn } =
+      selection;
+    const range = new monaco.Range(
+      startLineNumber,
+      startColumn,
+      endLineNumber,
+      endColumn
+    );
+
+    editor.executeEdits("mustache-menu", [
+      {
+        range,
+        text: snippet,
+        forceMoveMarkers: true,
+      },
+    ]);
+
+    const lines = snippet.split("\n");
+    const lastLine = lines[lines.length - 1] ?? "";
+    const lineNumber = startLineNumber + lines.length - 1;
+    const column =
+      lines.length === 1 ? startColumn + lastLine.length : lastLine.length + 1;
+
+    editor.setPosition({ lineNumber, column });
+    editor.focus();
+  }, []);
+
+  const handleSnippetSelect = useCallback(
+    (option) => {
+      if (!option || !option.snippet) {
+        return;
+      }
+
+      handleSnippetInsert(option.snippet);
+    },
+    [handleSnippetInsert]
+  );
 
   const formattedContext = useMemo(
     () => (context ? JSON.stringify(context, null, 2) : ""),
@@ -199,7 +349,15 @@ const HomePage = () => {
             <Typography variant="h6" component="h2">
               Handlebars Template
             </Typography>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                flexWrap: "wrap",
+                justifyContent: "flex-end",
+              }}
+            >
               <Button
                 variant="outlined"
                 size="small"
@@ -209,12 +367,9 @@ const HomePage = () => {
               >
                 {isTemplateLoading ? "Refreshing…" : "Refresh template"}
               </Button>
-              <Chip
-                label="Monaco Editor"
-                size="small"
-                variant="outlined"
-                color="info"
-                sx={{ fontSize: "0.75rem", textTransform: "uppercase" }}
+              <HandlebarsSnippetMenu
+                options={mustacheOptions}
+                onSelect={handleSnippetSelect}
               />
             </Box>
           </Box>
@@ -227,6 +382,7 @@ const HomePage = () => {
             height="240vh"
             value={template}
             onChange={handleTemplateChange}
+            onEditorMount={handleEditorMount}
           />
           <Typography
             variant="caption"
@@ -319,25 +475,9 @@ const HomePage = () => {
               >
                 {isContextLoading ? "Refreshing…" : "Refresh context"}
               </Button>
-              <Chip
-                label="Live Output"
-                size="small"
-                variant="outlined"
-                color="success"
-                sx={{ fontSize: "0.75rem", textTransform: "uppercase" }}
-              />
             </Box>
           </Box>
-          {/* <Paper
-            variant="outlined"
-            sx={{
-              flex: 1,
-              width: '100%',
-              overflow: 'auto',
-              p: 3,
-              bgcolor: 'background.paper'
-            }}
-          > */}
+
           {isContextLoading ? (
             <Typography variant="body2" color="text.secondary">
               Loading sample data…
